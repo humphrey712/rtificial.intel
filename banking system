@@ -1,0 +1,47 @@
+def get_customer_details():
+    name = input("Enter customer name: ")
+
+    while True:
+        try:
+            transaction_amount = float(input("Enter transaction amount (KES): "))
+            loan_amount = float(input("Enter loan amount (KES): "))
+            years = int(input("Enter loan period (years): "))
+
+            if transaction_amount <= 0 or loan_amount <= 0 or years <= 0:
+                print("All values must be positive. Try again.")
+                continue
+            break
+        except ValueError:
+            print("Invalid input. Please enter numeric values.")
+
+    return name, transaction_amount, loan_amount, years
+
+def calculate_commission(transaction_amount):
+    if transaction_amount < 10000:
+        rate = 0.02
+    elif transaction_amount <= 50000:
+        rate = 0.03
+    else:
+        rate = 0.05
+    return transaction_amount * rate
+
+def calculate_monthly_repayment(loan_amount, years):
+    total_with_interest = loan_amount * 1.10  # add 10% interest
+    months = years * 12
+    return total_with_interest / months
+
+def main():
+    name, transaction_amount, loan_amount, years = get_customer_details()
+    commission = calculate_commission(transaction_amount)
+    monthly_repayment = calculate_monthly_repayment(loan_amount, years)
+
+    print("\n--- Customer Financial Summary ---")
+    print(f"Customer Name: {name}")
+    print(f"Transaction Amount: KES {transaction_amount}")
+    print(f"Bank Commission: KES {commission:.2f}")
+    print(f"Loan Amount: KES {loan_amount}")
+    print(f"Loan Period: {years} years")
+    print(f"Monthly Loan Repayment: KES {monthly_repayment:.2f}")
+
+if __name__ == "__main__":
+    main()
